@@ -11,6 +11,9 @@ app.get("/", (req, res) => {
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+//setting static files
+app.use(express.static("public"));
+
 app.listen(port, () => {
   console.log(`Express is now listening on localhost:3000`);
 });
