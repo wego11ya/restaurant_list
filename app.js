@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
+const restaurantList = require("./restaurant.json");
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { restaurants: restaurantList.results });
 });
 
 //setting template engine
