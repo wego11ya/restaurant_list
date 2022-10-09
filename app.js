@@ -3,6 +3,18 @@ const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
 const restaurantList = require("./restaurant.json");
+const mongoose = require("mongoose");
+const db = mongoose.connection;
+
+mongoose.connect(process.env.MONGODB_URI);
+
+db.on("error", () => {
+  console.log("mogodb error!");
+});
+
+db.once("open", () => {
+  console.log("mongodb connected!");
+});
 
 app.get("/", (req, res) => {
   res.render("index", { restaurants: restaurantList.results });
