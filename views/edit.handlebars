@@ -1,0 +1,119 @@
+<h1 class="restaurant-show-title">修改餐廳</h1>
+<div class="container">
+  <form action="/restaurants/{{restaurant._id}}" method="POST">
+    <div class="form-group">
+      <label for="name">店名<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        placeholder="ABC日式燒肉"
+        value="{{restaurant.name}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="name_en">英文店名<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        name="name_en"
+        placeholder="ABC BBQ house"
+        value="{{restaurant.name_en}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="category">分類<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        name="category"
+        placeholder="日本料理"
+        list="categoryOptions"
+        value="{{restaurant.category}}"
+        required
+      />
+      <datalist id="categoryOptions">
+        <option>美式</option>
+        <option>咖啡</option>
+        <option>中東料理</option>
+        <option>日本料理</option>
+        <option>義式餐廳</option>
+      </datalist>
+    </div>
+    <div class="form-group">
+      <label for="image">圖片連結<span class="text-danger">*</span></label>
+      <input
+        type="url"
+        class="form-control"
+        name="image"
+        value="{{restaurant.image}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="location">地址<span class="text-danger">*</span></label>
+      <input
+        type="text"
+        class="form-control"
+        name="location"
+        placeholder="台北市松山區台灣大道1010號"
+        value="{{restaurant.location}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="phone">電話<span class="text-danger">*</span></label>
+      <input
+        type="tel"
+        class="form-control"
+        name="phone"
+        placeholder="02-10101010"
+        value="{{restaurant.phone}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="google_map">Google地圖連結<span
+          class="text-danger"
+        >*</span></label>
+      <input
+        type="url"
+        class="form-control"
+        name="google_map"
+        value="{{restaurant.google_map}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="rating">評分<span class="text-danger">*</span></label>
+      <input
+        type="number"
+        class="form-control"
+        name="rating"
+        min="0"
+        max="5"
+        step="0.1"
+        value="{{restaurant.rating}}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">敘述<span class="text-danger">*</span></label>
+      <textarea
+        class="form-control"
+        name="description"
+        id="description"
+        rows="5"
+        required
+      >{{restaurant.description}}</textarea>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-info">Save</button>
+      <a href="/">
+        <button type="button" class="btn btn-light">返回首頁</button>
+      </a>
+    </div>
+  </form>
+</div>
