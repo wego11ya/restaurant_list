@@ -5,6 +5,7 @@ const exphbs = require("express-handlebars");
 const restaurantList = require("./restaurant.json");
 const mongoose = require("mongoose");
 const db = mongoose.connection;
+const Restaurant = require("./models/Restaurant");
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -16,8 +17,16 @@ db.once("open", () => {
   console.log("mongodb connected!");
 });
 
+// review all restaurants
 app.get("/", (req, res) => {
-  res.render("index", { restaurants: restaurantList.results });
+  Restaurant.find()
+    .lean()
+    .then((restaurants) => res.render("index", { restaurants }))
+    .catch((error) => console.log(error));
+});
+
+app.get("/restaurants/new", (req, res) => {
+  res.render("new");
 });
 
 app.get("/restaurants/:restaurant_id", (req, res) => {
