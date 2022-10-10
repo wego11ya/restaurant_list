@@ -17,6 +17,9 @@ db.once("open", () => {
   console.log("mongodb connected!");
 });
 
+//setting body-parser
+app.use(express.urlencoded({ extended: true }));
+
 // review all restaurants
 app.get("/", (req, res) => {
   Restaurant.find()
@@ -25,8 +28,16 @@ app.get("/", (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Page of creating new restaurant
 app.get("/restaurants/new", (req, res) => {
   res.render("new");
+});
+
+// Create new restaurant
+app.post("/restaurants", (req, res) => {
+  Restaurant.create(req.body)
+    .then(() => res.redirect("/"))
+    .catch((error) => console.log(error));
 });
 
 app.get("/restaurants/:restaurant_id", (req, res) => {
