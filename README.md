@@ -29,7 +29,7 @@
 
 4. 設定 MongoDB 環境變數
 
-   ```bash
+   ```
    set MONGODB_URI="你的MongoDB連線字串" // for Windows cmd
    export MONGODB_URI="你的MongoDB連線字串" // for bash (MacOS bash terminal and Git bash for Windows)
    ```
