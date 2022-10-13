@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const db = mongoose.connection;
 const Restaurant = require("./models/Restaurant");
 
+// mongoose connection
 mongoose.connect(process.env.MONGODB_URI);
 
 db.on("error", () => {
@@ -49,7 +50,7 @@ app.get("/restaurants/:id", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-// Show edit page
+// Edit page
 app.get("/restaurants/:id/edit", (req, res) => {
   const id = req.params.id;
   Restaurant.findById(id)
@@ -61,11 +62,7 @@ app.get("/restaurants/:id/edit", (req, res) => {
 // Edit restaurant details
 app.post("/restaurants/:id", (req, res) => {
   const id = req.params.id;
-  return Restaurant.findById(id)
-    .then((restaurant) => {
-      restaurant = req.body;
-      return restaurant.save();
-    })
+  Restaurant.findByIdAndUpdate(id, req.body)
     .then(() => res.redirect(`/restaurants/${id}`))
     .catch((error) => console.log(error));
 });
@@ -79,16 +76,24 @@ app.post("/restaurants/:id/delete", (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Search function
 app.get("/search", (req, res) => {
-  const keyword = req.query.keyword.trim().toLowerCase();
-  const restaurants = restaurantList.results.filter((restaurant) => {
-    return (
-      restaurant.name.toLowerCase().includes(keyword) ||
-      restaurant.category.includes(keyword)
-    );
-  });
-  res.render("index", { restaurants: restaurants, keyword: keyword });
+  const keyword = req.query.keyword;
+
+  Restaurant.find()
+    .lean()
+    .then((restaurants) => {
+      const filteredRestaurants = restaurants.filter((data) => {
+        return (
+          data.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          data.category.includes(keyword)
+        );
+      });
+      res.render("index", { restaurants: filteredRestaurants, keyword });
+    })
+    .catch((error) => console.log(error));
 });
+
 //setting template engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
