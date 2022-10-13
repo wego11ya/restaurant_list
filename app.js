@@ -102,5 +102,5 @@ app.set("view engine", "handlebars");
 app.use(express.static("public"));
 
 app.listen(port, () => {
-  console.log(`Express is now listening on localhost:3000`);
+  console.log(`Restaurant List is now listening on http://localhost:3000`);
 });
