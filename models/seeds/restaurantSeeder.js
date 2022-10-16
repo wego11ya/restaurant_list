@@ -1,14 +1,6 @@
-const mongoose = require("mongoose");
 const Restaurant = require("../Restaurant");
 const restaurantList = require("../../restaurant.json").results;
-
-mongoose.connect(process.env.MONGODB_URI);
-
-const db = mongoose.connection;
-
-db.on("error", () => {
-  console.log("mongodb error!");
-});
+const db = require("../../config/mongoose");
 
 db.once("open", () => {
   console.log("running restaurantSeeder script...");
@@ -16,7 +8,7 @@ db.once("open", () => {
   Restaurant.create(restaurantList)
     .then(() => {
       console.log("restaurantSeeder done!");
-      // db.close();
+      db.close();
     })
     .catch((err) => console.log(err));
 });
