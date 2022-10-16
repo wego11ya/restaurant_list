@@ -5,7 +5,7 @@ const exphbs = require("express-handlebars");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const db = mongoose.connection;
-const Restaurant = require("./models/Restaurant");
+const routes = require("./routes");
 
 // mongoose connection
 mongoose.connect(process.env.MONGODB_URI);
@@ -24,78 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 // for each request, use methodOverride to process
 app.use(methodOverride("_method"));
 
-// review all restaurants
-app.get("/", (req, res) => {
-  Restaurant.find()
-    .lean()
-    .then((restaurants) => res.render("index", { restaurants }))
-    .catch((error) => console.log(error));
-});
-
-// Page of creating new restaurant
-app.get("/restaurants/new", (req, res) => {
-  res.render("new");
-});
-
-// Create new restaurant
-app.post("/restaurants", (req, res) => {
-  Restaurant.create(req.body)
-    .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
-});
-
-// Show particular restaurant details
-app.get("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render("show", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-// Edit page
-app.get("/restaurants/:id/edit", (req, res) => {
-  const id = req.params.id;
-  Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render("edit", { restaurant }))
-    .catch((error) => console.log(error));
-});
-
-// Edit restaurant details
-app.put("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  Restaurant.findByIdAndUpdate(id, req.body)
-    .then(() => res.redirect(`/restaurants/${id}`))
-    .catch((error) => console.log(error));
-});
-
-// Delete restaurant
-app.delete("/restaurants/:id", (req, res) => {
-  const id = req.params.id;
-  Restaurant.findById(id)
-    .then((restaurant) => restaurant.remove())
-    .then(() => res.redirect("/"))
-    .catch((error) => console.log(error));
-});
-
-// Search function
-app.get("/search", (req, res) => {
-  const keyword = req.query.keyword;
-
-  Restaurant.find()
-    .lean()
-    .then((restaurants) => {
-      const filteredRestaurants = restaurants.filter((data) => {
-        return (
-          data.name.toLowerCase().includes(keyword.toLowerCase()) ||
-          data.category.includes(keyword)
-        );
-      });
-      res.render("index", { restaurants: filteredRestaurants, keyword });
-    })
-    .catch((error) => console.log(error));
-});
+// 將request 導入路由器，引入路由器時，路徑設定為 /routes 就會自動去尋找目錄下叫做 index 的檔案
+app.use(routes);
 
 //setting template engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
