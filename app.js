@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
-const restaurantList = require("./restaurant.json");
+const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const db = mongoose.connection;
 const Restaurant = require("./models/Restaurant");
@@ -20,6 +20,9 @@ db.once("open", () => {
 
 //setting body-parser
 app.use(express.urlencoded({ extended: true }));
+
+// for each request, use methodOverride to process
+app.use(methodOverride("_method"));
 
 // review all restaurants
 app.get("/", (req, res) => {
@@ -60,7 +63,7 @@ app.get("/restaurants/:id/edit", (req, res) => {
 });
 
 // Edit restaurant details
-app.post("/restaurants/:id", (req, res) => {
+app.put("/restaurants/:id", (req, res) => {
   const id = req.params.id;
   Restaurant.findByIdAndUpdate(id, req.body)
     .then(() => res.redirect(`/restaurants/${id}`))
@@ -68,7 +71,7 @@ app.post("/restaurants/:id", (req, res) => {
 });
 
 // Delete restaurant
-app.post("/restaurants/:id/delete", (req, res) => {
+app.delete("/restaurants/:id", (req, res) => {
   const id = req.params.id;
   Restaurant.findById(id)
     .then((restaurant) => restaurant.remove())
