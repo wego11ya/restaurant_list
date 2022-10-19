@@ -2,9 +2,9 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
+      <h4 class="mb-2">尋找餐廳：</h4>
+      <form class="row" action="/search">
+        <div class="col-9 input-group">
           <input
             type="text"
             name="keyword"
@@ -20,11 +20,21 @@
               ></i></button>
           </div>
         </div>
+        <div class="col-3">
+          <select
+            class="form-control"
+            name="sortingType"
+            id="sortingType"
+            onchange="this.form.submit()"
+          >
+            <option value="a-z" selected>A → Z </option>
+            <option value="z-a">Z → A</option>
+            <option value="category">類別</option>
+            <option value="location">地區</option>
+          </select>
+        </div>
       </form>
     </div>
-    <a href="/restaurants/new" class="d-flex justify-content-end">
-      <button type="button" class="btn btn-info">新增餐廳</button>
-    </a>
   </div>
 </div>
 
