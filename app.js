@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
@@ -19,6 +20,15 @@ app.use(routes);
 //setting template engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+// setting express-session可以幫你截取 cookie 資訊、生成 session，並把 session 資訊存放在伺服器端。
+app.use(
+  session({
+    secret: "ThisIsMySecret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 //setting static files
 app.use(express.static("public"));
