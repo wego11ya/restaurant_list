@@ -4,9 +4,6 @@ const User = require("../../models/user");
 // 引用 passport
 const passport = require("passport");
 
-router.get("/login", (req, res) => {
-  res.render("login");
-});
 router.post(
   "/login",
   passport.authenticate("local", {
@@ -48,6 +45,10 @@ router.post("/register", (req, res) => {
       }
     })
     .catch((err) => console.log(err));
+});
+
+router.get("/login", (req, res) => {
+  res.render("login");
 });
 
 module.exports = router;
