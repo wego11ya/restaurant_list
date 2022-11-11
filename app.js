@@ -16,6 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 // for each request, use methodOverride to process
 app.use(methodOverride("_method"));
 
+// setting express-session可以幫你截取 cookie 資訊、生成 session，並把 session 資訊存放在伺服器端。
+app.use(
+  session({
+    secret: "ThisIsMySecret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app);
 
@@ -25,15 +34,6 @@ app.use(routes);
 //setting template engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-
-// setting express-session可以幫你截取 cookie 資訊、生成 session，並把 session 資訊存放在伺服器端。
-app.use(
-  session({
-    secret: "ThisIsMySecret",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 
 //setting static files
 app.use(express.static("public"));
