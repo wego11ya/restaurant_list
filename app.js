@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
 
 const routes = require("./routes");
 require("./config/mongoose");
@@ -28,10 +29,13 @@ app.use(
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app);
 
+app.use(flash());
 // 設定本地變數 res.locals, 放在res.locals的資料所有的view都可以存取
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
+  res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
   next();
 });
 
