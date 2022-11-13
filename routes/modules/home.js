@@ -10,7 +10,8 @@ const sorting = require("../../utilities/sort");
 
 // show all restaurants
 router.get("/", (req, res) => {
-  Restaurant.find()
+  const userId = req.user._id;
+  Restaurant.find({ userId })
     .lean()
     .sort({ name: "asc" })
     .then((restaurants) => res.render("index", { restaurants }))
