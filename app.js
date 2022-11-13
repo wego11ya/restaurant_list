@@ -28,6 +28,13 @@ app.use(
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app);
 
+// 設定本地變數 res.locals, 放在res.locals的資料所有的view都可以存取
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
+  next();
+});
+
 // 將request 導入路由器，引入路由器時，路徑設定為 /routes 就會自動去尋找目錄下叫做 index 的檔案
 app.use(routes);
 
