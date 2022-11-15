@@ -1,10 +1,14 @@
 const express = require("express");
 const session = require("express-session");
 const app = express();
-const port = 3000;
+const PORT = 3000; //不知道為什麼如果設定了process.evn.PORT程式會掛掉
 const exphbs = require("express-handlebars");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+console.log(process.env);
 
 const routes = require("./routes");
 require("./config/mongoose");
@@ -20,7 +24,7 @@ app.use(methodOverride("_method"));
 // setting express-session可以幫你截取 cookie 資訊、生成 session，並把 session 資訊存放在伺服器端。
 app.use(
   session({
-    secret: "ThisIsMySecret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -49,6 +53,6 @@ app.set("view engine", "handlebars");
 //setting static files
 app.use(express.static("public"));
 
-app.listen(port, () => {
-  console.log(`Restaurant List is now listening on http://localhost:3000`);
+app.listen(PORT, () => {
+  console.log(`Restaurant List is now listening on http://localhost:${PORT}`);
 });
