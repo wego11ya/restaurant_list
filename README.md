@@ -6,16 +6,23 @@
 
 ### 功能
 
-- 使用者可以瀏覽所有餐廳
-  ![Screenshot from index page ](./public/image/screenshotIndex.PNG)
-- 使用者可以搜尋特定餐廳
-- 使用者可以新增一家餐廳
-  ![Screenshot from index page ](./public/image/screenshotCreate.PNG)
-- 使用者可以瀏覽一家餐廳的詳細資訊
-  ![Screenshot from index page ](./public/image/screenshotDetail.PNG)
-- 使用者可以修改一家餐廳的資訊
-  ![Screenshot from index page ](./public/image/screenshotEdit.PNG)
-- 使用者可以刪除一家餐廳
+- 使用者可以註冊帳號或是用 Facebook 登入
+- 使用者登入後可以建立屬於自己的餐廳清單，資訊包含餐廳名稱/圖片/類型/評分/Google 地圖連結等...
+- 使用者可以新增/刪除/修改/查詢餐廳資訊
+
+## 專案畫面
+
+#### 登入
+
+![Screenshot from index page ](./public/image/login.png)
+
+#### 首頁
+
+![Screenshot from index page ](./public/image/index.png)
+
+#### 詳細資料
+
+![Screenshot from index page ](./public/image/detail.png)
 
 ## 開始使用
 
@@ -27,11 +34,15 @@
    npm install // 安裝套件
    ```
 
-4. 設定 MongoDB 環境變數
+4. 建立.evn 檔案，參考.env.example 以設置環境變數
 
    ```
-   set MONGODB_URI="你的MongoDB連線字串" // for Windows cmd
-   export MONGODB_URI="你的MongoDB連線字串" // for bash (MacOS bash terminal and Git bash for Windows)
+   FACEBOOK_ID=SKIP
+   FACEBOOK_SECRET=SKIP
+   FACEBOOK_CALLBACK=http://localhost:3000/auth/facebook/callback
+   SESSION_SECRET=ThisIsMySecret
+   MONGODB_URI="Your MONGODB connection string"
+   PORT=3000
    ```
 
 5. 寫入種子資料
@@ -66,6 +77,12 @@
 - Express 4.18.1
 - Mongoose 6.6.5
 - Express-Handlebars 3.0.0
+- bcryptjs 2.4.3
+- connect-flash 0.1.1
+- dotenv 8.2.0
+- express-session 1.17.3
+- method-override 3.0.0
+- passport 0.4.1
 - Bootstrap 4.3.1
 - Font-awesome 5.8.1
 
