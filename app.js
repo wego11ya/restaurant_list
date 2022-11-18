@@ -1,14 +1,13 @@
-const express = require("express");
-const session = require("express-session");
-const app = express();
-const PORT = 3000; //不知道為什麼如果設定了process.evn.PORT程式會掛掉
-const exphbs = require("express-handlebars");
-const methodOverride = require("method-override");
-const flash = require("connect-flash");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-console.log(process.env);
+const express = require("express");
+const session = require("express-session");
+const app = express();
+const PORT = process.env.PORT;
+const exphbs = require("express-handlebars");
+const methodOverride = require("method-override");
+const flash = require("connect-flash");
 
 const routes = require("./routes");
 require("./config/mongoose");
