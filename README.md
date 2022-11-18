@@ -65,7 +65,21 @@
 
    請至 http://localhost:3000 開啟網站
 
-8. 若欲中斷伺服器連線，請按
+8. 可以使用下列兩個種子資料進行測試
+
+   ```bash
+   User1
+   email: user1@example.com
+   password: 12345678
+
+   -------------------------
+
+   User2
+   email: user2@example.com
+   password: 12345678
+   ```
+
+9. 若欲中斷伺服器連線，請按
 
    ```bash
    ctrl + c
