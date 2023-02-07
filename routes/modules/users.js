@@ -24,14 +24,8 @@ router.post("/register", (req, res) => {
   // 取得註冊表單參數
   const { name, email, password, confirmPassword } = req.body;
   const errors = [];
-  if (!email) {
-    errors.push({ message: "請填寫Email欄位" });
-  }
-  if (!password) {
-    errors.push({ message: "請填寫Password欄位" });
-  }
-  if (!confirmPassword) {
-    errors.push({ message: "請填寫Confirm Password欄位" });
+  if(!name || !email || !password || !confirmPassword) {
+    errors.push({message: '所有欄位都是必填'})
   }
   if (password !== confirmPassword) {
     errors.push({ message: "密碼與確認密碼不相符！" });

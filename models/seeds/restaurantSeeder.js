@@ -31,6 +31,7 @@ const SEED_USER = [
 // 連線成功
 db.once("open", () => {
   Promise.all(
+    // 這邊用map是因為要動裡面的值，如果是forEach沒有回傳值
     SEED_USER.map((user) => {
       const { name, email, password, indexField } = user;
       return User.create({
