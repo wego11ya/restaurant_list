@@ -20,11 +20,11 @@ router.get("/", (req, res) => {
 
 // Search function
 router.get("/search", (req, res) => {
-  console.log(req.query.sortingType);
   const keyword = req.query.keyword;
   const sortingType = req.query.sortingType;
+  const userId = req.user._id
 
-  Restaurant.find()
+  Restaurant.find({userId})
     .lean()
     .sort(sorting(sortingType))
     .then((restaurants) => {
